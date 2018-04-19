@@ -7,7 +7,7 @@ The "drive thru timer" data shows how long it takes for the restraunt to serve a
 
 Today we will be analyzing drive thru timer data for lunch time. Lunch time is defined from 11 AM - 2 PM and the event code we are looking for is "LINE".
 
-The stores are sending files in the format <StoreNumber>_<YYYYMMDD>_dttlog.txt.
+The stores are sending files in the format "StoreNumber"_"YYYYMMDD"_dttlog.txt.
 
 We also have information regarding the "stores". 
 
