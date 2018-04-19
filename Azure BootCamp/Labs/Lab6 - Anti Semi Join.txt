@@ -1,0 +1,49 @@
+//Input Path
+DECLARE @dtt_file_set_path string = "/cleansed/drivetime/drivetimecleansed.csv"; 
+DECLARE @store_file_set_path string = "/staging/stores/stores.csv"; 
+
+//Output Path
+DECLARE @output_set_path = "/reporting/leftsemijoin.csv";
+
+ @drivethrutimer = 
+        EXTRACT timer_event_date string,
+                timer_event_date_start string,
+                timer_event_date_end string,
+                event_code string,
+                storenbr string,
+                filename string
+        FROM @dtt_file_set_path
+        USING Extractors.Csv(skipFirstNRows : 1);
+
+@store = 
+        EXTRACT storenbr string,
+                city string,
+                state string,
+                zipcode string,
+                latitude string,
+                longitude string,
+                area string
+        FROM @store_file_set_path
+        USING Extractors.Csv(skipFirstNRows : 1);
+
+@avgdrivethrutimer = 
+        SELECT  dtt.storenbr, AVG((Convert.ToInt32((Convert.ToDateTime(dtt.[timer_event_date_end]) - Convert.ToDateTime(dtt.[timer_event_date_start])).TotalSeconds)))/60 AS avgdrivethrutimeinminutes
+        FROM    @drivethrutimer AS dtt
+        GROUP BY    dtt.storenbr;
+
+@storeswithlessthan4minutes   = 
+    SELECT storenbr
+        FROM @avgdrivethrutimer
+        WHERE avgdrivethrutimeinminutes < 4;
+
+@result = 
+        SELECT str.storenbr, str.city, str.state, str.area, AVG((Convert.ToInt32((Convert.ToDateTime(dtt.[timer_event_date_end]) - Convert.ToDateTime(dtt.[timer_event_date_start])).TotalSeconds)))/60 AS avgdrivethrutimeinminutes
+        FROM @drivethrutimer AS dtt
+            INNER JOIN  @store AS str ON str.storenbr == dtt.storenbr
+            LEFT ANTISEMIJOIN @storeswithlessthan4minutes AS ex ON ex.storenbr == str.storenbr
+            GROUP BY str.storenbr, str.city, str.state, str.area;
+
+
+OUTPUT @result
+TO @output_set_path
+USING Outputters.Csv(outputHeader: true);

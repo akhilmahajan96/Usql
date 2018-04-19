@@ -1,0 +1,10 @@
+@data  = 
+    SELECT * FROM 
+        (VALUES
+            ("S1000001", 4.55),
+            ("S21000001", 10.25)
+        ) AS 
+              D( store, avgdrivetime );
+OUTPUT @data
+    TO "/output/data.csv"
+    USING Outputters.Csv();

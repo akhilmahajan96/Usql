@@ -1,0 +1,35 @@
+//Input Path
+DECLARE @file_set_path string = "/staging/drivetime/{filename}"; 
+
+//Output Path
+DECLARE @output_set_path = "/reporting/virtualcolumn.csv";
+
+ @data = 
+        EXTRACT seq_nbr int,
+                timer_date_stamp string,
+                timer_event_start string,
+                timer_event_end string,
+                status string,
+                event_code string,
+                back_office_date string,
+                back_office_time string,
+                filename string
+        FROM @file_set_path
+        USING Extractors.Csv();
+
+@result = 
+        SELECT d.seq_nbr,
+            d.timer_date_stamp,
+            d.timer_event_start,
+            d.timer_event_end,
+            d.status,
+            d.event_code,
+            d.back_office_date,
+            d.back_office_time,
+            d.filename
+        FROM @data AS d;
+    
+
+OUTPUT @result
+TO @output_set_path
+USING Outputters.Csv(outputHeader: true);

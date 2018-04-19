@@ -1,0 +1,56 @@
+SET @@FeaturePreviews = "InputFileGrouping:on";
+
+//Input Path
+DECLARE @file_set_path string = "/staging/drivetime/{filename}"; 
+
+//Output Path
+DECLARE @output_set_path = "/cleansed/drivetime/drivetimecleansed.csv";
+
+ @data = 
+        EXTRACT seq_nbr int,
+                timer_date_stamp string,
+                timer_event_start string,
+                timer_event_end string,
+                status string,
+                event_code string,
+                back_office_date string,
+                back_office_time string,
+                filename string
+        FROM @file_set_path
+        USING Extractors.Csv();
+
+@result = 
+        SELECT d.seq_nbr,
+            DateTime.Parse(d.timer_date_stamp).ToString("yyyy-MM-dd HH:mm:ss").Substring(0, 10) AS timer_event_date,
+            // Timer Event Start
+            d.timer_event_start.Substring(0, 10) IN ("1899-12-30", "1900-01-01") ?
+            (
+            DateTime.Parse(String.Concat((DateTime.Parse(d.timer_date_stamp).ToString("yyyy-MM-dd HH:mm:ss").Substring(0, 10)), " ", d.timer_event_start.Substring(d.timer_event_start.IndexOf(" ") + 1)))
+            ) : DateTime.Parse(d.timer_event_start) AS timer_event_date_start_1,
+            // Timer Event End
+            d.timer_event_end.Substring(0, 10) IN ("1899-12-30", "1900-01-01") ?
+            (
+            //When converting Timer Event End Dates that are equal to 1899-12-30, increment the date if the Event Start Time is after 11:00 PM and the Event End Time is after 12:00 AM
+            (d.timer_event_start.Substring(11, 2)=="23" AND d.timer_event_end.Substring(11, 2)=="00")
+            ? DateTime.Parse(String.Concat((DateTime.Parse(d.timer_date_stamp).AddDays(1).ToString("yyyy-MM-dd HH:mm:ss").Substring(0, 10)), " ", d.timer_event_end.Substring(d.timer_event_end.IndexOf(" ") + 1)))
+            : DateTime.Parse(String.Concat((DateTime.Parse(d.timer_date_stamp).ToString("yyyy-MM-dd HH:mm:ss").Substring(0, 10)), " ", d.timer_event_end.Substring(d.timer_event_end.IndexOf(" ") + 1)))
+            ) : DateTime.Parse(d.timer_event_end) AS timer_event_date_end_1,
+            d.event_code,           
+            d.filename.Substring(0, d.filename.IndexOf("_")) AS store,
+            d.filename
+        FROM @data AS d 
+        WHERE d.event_code.Trim() == "LINE"
+            AND d.timer_event_end != "" AND d.timer_event_end IS NOT NULL;
+
+@result1 = 
+    SELECT timer_event_date,
+        timer_event_date_start_1.ToString("yyyy-MM-dd HH:mm:ss") AS timer_event_date_start,
+        timer_event_date_end_1.ToString("yyyy-MM-dd HH:mm:ss") AS timer_event_date_end,
+        event_code,
+        store,
+        filename
+    FROM @result;    
+
+OUTPUT @result1
+TO @output_set_path
+USING Outputters.Csv(outputHeader: true);

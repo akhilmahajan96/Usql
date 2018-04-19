@@ -1,0 +1,35 @@
+//Input Path
+DECLARE @dtt_file_set_path string = "/cleansed/drivetime/drivetimecleansed.csv"; 
+DECLARE @store_file_set_path string = "/staging/stores/stores.csv"; 
+
+//Output Path
+DECLARE @output_set_path = "/reporting/reportingfunctions.csv";
+
+ @drivethrutimer = 
+        EXTRACT timer_event_date string,
+                timer_event_date_start string,
+                timer_event_date_end string,
+                event_code string,
+                storenbr string,
+                filename string
+        FROM @dtt_file_set_path
+        USING Extractors.Csv(skipFirstNRows : 1);
+
+@drivethrutimer1 = SELECT   timer_event_date,       timer_event_date_start, timer_event_date_end, storenbr, (Convert.ToInt32((Convert.ToDateTime([timer_event_date_end]) - Convert.ToDateTime([timer_event_date_start])).TotalSeconds))/60 AS drivethrutimeinminutes, DateTime.Parse(timer_event_date_start).Hour AS starthour, DateTime.Parse(timer_event_date_end ).Hour AS endhour 
+    FROM @drivethrutimer;
+    
+
+@result = 
+    SELECT  COUNT(*) AS nbrofdrivethrutimes
+        , SUM(drivethrutimeinminutes) AS totaldrivethrutimeinminutes
+        , MIN(drivethrutimeinminutes) AS minimumdrivethrutimeinminutes
+        , MAX(drivethrutimeinminutes) AS maximumdrivethrutimeinminutes
+        , AVG(drivethrutimeinminutes) AS averagedrivethrutimeinminutes
+        , STDEV(drivethrutimeinminutes) AS stddeviationdrivethrutimeinminutes
+        , VAR(drivethrutimeinminutes) AS variancedrivethrutimeinminutes
+    FROM @drivethrutimer1
+    WHERE starthour >= 11 AND starthour < 14;
+
+OUTPUT @result
+TO @output_set_path
+USING Outputters.Csv(outputHeader: true);

@@ -1,0 +1,12 @@
+StoreNbr,City,State,Zip,Lat,Lon,Area
+S1000001,New York,NY,10004,40.6964,-74.0253,Lower Manhattan
+S2000001,Los Angeles,CA,90045,33.9631,-118.3941,Downtown
+S3000001,Chicago,IL,60605,41.8713,-87.6277,Lake Shore Dr
+S4000001,Houston,TX,77002,29.7594,-95.3594,Downtown
+S5000001,Atlanta,GA,30303,33.7525,-84.3888,Downtown
+S6000001,Minneapolis,MN,55402,44.9762,-93.2759,Center City
+S7000001,Miami,FL,33131,25.7629,-80.1895,Downtown
+S8000001,Seattle,WA,98104,47.6036,-122.3256,Downtown
+S9000001,Nashville,TN,37243,36.165,-86.7821,Government Center
+S1010001,Kansas City,MO,64106,39.1052,-94.5699,Financial District
+S2010001,Cincinnati,OH,45202,39.1031,-84.5120,Downtown
