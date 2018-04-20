@@ -1,3 +1,5 @@
+//This lab creates a basic Hell0 USQL package.
+
 @data  = 
     SELECT * FROM 
         (VALUES
