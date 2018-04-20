@@ -2,6 +2,9 @@
 //Virtual Columns are used to read pattern based folders or files
 //Virtual Columns can be included as columns as the data is available to be read
 
+//After running this job, a csv file "virtualcolumn.csv" will be created under the "reporting" folder in your data lake store.
+//If you run this job multiple times, it will over-write the existing file.
+
 //Input Path
 DECLARE @file_set_path string = "/staging/drivetime/{filename}"; 
 
@@ -31,8 +34,7 @@ DECLARE @output_set_path = "/reporting/virtualcolumn.csv";
             d.back_office_date,
             d.back_office_time,
             d.filename
-        FROM @data AS d;
-    
+        FROM @data AS d;    
 
 OUTPUT @result
 TO @output_set_path

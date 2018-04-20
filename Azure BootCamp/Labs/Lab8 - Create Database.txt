@@ -1,1 +1,4 @@
+//This job creates a database in ADLA.
+//This database is only available with in the ADLA account.
+
 CREATE DATABASE AzureBootCampAKHM;

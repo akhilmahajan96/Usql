@@ -5,8 +5,8 @@
 //IndexOf(" ") --> finds the first appearnce of a string you are looking for.
 //String.Concat --> Concatenates different varibles/fields together
 
-
-//Wildcards does not give you back the folder of the file names
+//After running this job, a csv file "drivetimecleansed.csv" will be created under the "cleansed/drivetime/" folder in your data lake store.
+//If you run this job multiple times, it will over-write the existing file.
 
 SET @@FeaturePreviews = "InputFileGrouping:on";
 

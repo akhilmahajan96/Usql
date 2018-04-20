@@ -1,3 +1,8 @@
+//This lab shows to do a inner join
+
+//After running this job, a csv file "innerjoin.csv" will be created under the "reporting" folder in your data lake store.
+//If you run this job multiple times, it will over-write the existing file.
+
 //Input Path
 DECLARE @dtt_file_set_path string = "/cleansed/drivetime/drivetimecleansed.csv"; 
 DECLARE @store_file_set_path string = "/staging/stores/stores.csv"; 

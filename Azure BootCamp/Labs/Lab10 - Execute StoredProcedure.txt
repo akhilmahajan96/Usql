@@ -1,1 +1,6 @@
+//This lab shows how to execute a Stored Procedure
+
+//After running this job, 2 csv files "drivethrutimeravg.csv" and "drivethrutimeravgday.csv" will be created under the "powerbi" folder in your data lake store.
+//If you run this job multiple times, it will over-write the existing file(s).
+
 AzureBootCampAKHM.dbo.uspCreateDriveThruAnalysisData();

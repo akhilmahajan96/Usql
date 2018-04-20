@@ -1,5 +1,8 @@
-//This lab shows the use of Anti Semi Join
+//This lab shows the use of Anti Semi Join (NOT IN sql clause)
 //In this lab we are finding all the stores which have a average drive thru time (in mins) of more than 3 mins
+
+//After running this job, a csv file "leftsemijoin.csv" will be created under the "reporting" folder in your data lake store.
+//If you run this job multiple times, it will over-write the existing file.
 
 //Input Path
 DECLARE @dtt_file_set_path string = "/cleansed/drivetime/drivetimecleansed.csv"; 

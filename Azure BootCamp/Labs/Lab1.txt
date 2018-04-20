@@ -1,5 +1,9 @@
 //This lab creates a basic Hell0 USQL package.
 
+//After running this job, a csv file "data.csv" will be created under "output" folder in your data lake store.
+//We never created an "output" folder. USQL did by itself.
+//If you run this job multiple times, it will over-write the existing file.
+
 @data  = 
     SELECT * FROM 
         (VALUES
