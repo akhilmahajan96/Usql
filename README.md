@@ -1,5 +1,5 @@
 # Usql
-We are analyzing data for a fictious restraunt chain called "TacoBoutIT". "TacoBoutIT" has stores all over US. 
+We will be analyzing data using U-SQL for a restraunt chain called "TacoBoutIT". "TacoBoutIT" has stores all over US. 
 
 All the stores send their drive thru timer data in their local time zones. The "drive thru timer" data shows how long it takes for the restraunt to serve a customer from ordering the food via drive thru to getting the food. The stores are sending the drive thru timer files in the format <StoreNumber>_<YYYYMMDD>_dttlog.txt.
   
