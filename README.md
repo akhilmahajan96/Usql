@@ -15,4 +15,4 @@ After cloning the Git Hub repository or downloading the content, please open the
 2. Loading Data:- This section talks about how to create folders and upload the data which we would be analyzing. The data is stored in the "data" directory.
 3. Running the Labs:- This section talks about how to run the USQL jobs in the Azure Portal.
 
-# Please do the Labs in Order
+# ***Please do the Labs in Order
