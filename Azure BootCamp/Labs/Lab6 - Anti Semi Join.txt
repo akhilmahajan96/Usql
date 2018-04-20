@@ -1,3 +1,6 @@
+//This lab shows the use of Anti Semi Join
+//In this lab we are finding all the stores which have a average drive thru time (in mins) of more than 3 mins
+
 //Input Path
 DECLARE @dtt_file_set_path string = "/cleansed/drivetime/drivetimecleansed.csv"; 
 DECLARE @store_file_set_path string = "/staging/stores/stores.csv"; 

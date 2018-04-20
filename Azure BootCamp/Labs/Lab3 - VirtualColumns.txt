@@ -1,3 +1,7 @@
+//This lab shows the use of Virtual Columns
+//Virtual Columns are used to read pattern based folders or files
+//Virtual Columns can be included as columns as the data is available to be read
+
 //Input Path
 DECLARE @file_set_path string = "/staging/drivetime/{filename}"; 
 

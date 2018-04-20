@@ -1,3 +1,7 @@
+//This lab shows the use of Wilcards
+//Wildcards are used to read all the files in a folder
+//Wildcards does not give you back the folder of the file names
+
 //Input Path
 DECLARE @file_set_path string = "/staging/drivetime/{*}"; 
 

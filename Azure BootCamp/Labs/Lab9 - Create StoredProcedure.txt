@@ -1,3 +1,8 @@
+//This lab shows the hoe to create stored procedures
+//In this lab we are calculating the following metrics:- 
+//	1. Average lunch time drive thru timer by store 
+//	2. Average lunch time drive thru timer by store and day 
+
 USE DATABASE AzureBootCampAKHM;
 
 DROP PROCEDURE IF EXISTS dbo.uspCreateDriveThruAnalysisData;

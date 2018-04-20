@@ -1,3 +1,13 @@
+//This lab shows different ways of manipulating data
+//We are using C# functions to manipulate data
+//DateTime.Parse --> parses a string into DateTime
+//ToString("format") --> write the Date as a string in a certain format
+//IndexOf(" ") --> finds the first appearnce of a string you are looking for.
+//String.Concat --> Concatenates different varibles/fields together
+
+
+//Wildcards does not give you back the folder of the file names
+
 SET @@FeaturePreviews = "InputFileGrouping:on";
 
 //Input Path
