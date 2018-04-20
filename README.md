@@ -14,3 +14,5 @@ After cloning the Git Hub repository or downloading the content, please open the
 1. Create Data Lake Analytics Service and Data Lake Store :- This section talks about how to create Data Lake Analytics Service and Data Lake Store.
 2. Loading Data:- This section talks about how to create folders and upload the data which we would be analyzing. The data is stored in the "data" directory.
 3. Running the Labs:- This section talks about how to run the USQL jobs in the Azure Portal.
+
+# Please do the Labs in Order
